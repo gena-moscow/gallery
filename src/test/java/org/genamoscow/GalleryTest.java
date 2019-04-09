@@ -55,12 +55,23 @@ public class GalleryTest {
                 break;
             assertEquals(list.getTotalElements(), 2);
         }
+
+        image.setFirstName("savedFirstName");
+        long oldId = image.getId();
+        savedImage = imageService.saveImage(image);
+        assertEquals(oldId, (long)savedImage.getId());
+
+        savedImage = imageService.getImage(savedImage.getId());
+        assertEquals("savedFirstName", savedImage.getFirstName());
+
+        imageService.deleteImage(savedImage.getId());
+        Page<ImageProperties> list = imageService.list(0, 50);
+        assertEquals(list.getNumberOfElements(), 1);
+        assertEquals((long)list.getContent().get(0).getId(), 1L);
+
+
     }
 
-    @Test
-    public void saveMultipartTest() {
-
-    }
     private Image getImageFromFile(URI fileName) throws IOException {
         try (InputStream is = getClass().getResourceAsStream(fileName.getRawPath())) {
             byte[] bytes = IOUtils.toByteArray(is);
