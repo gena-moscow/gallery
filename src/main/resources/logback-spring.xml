@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  debug="false" scan="true" scanPeriod="10 seconds" >
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <logger name="org.genamoscow" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!--<logger name="org.genamoscow" level="debug"/>-->
+
+</configuration>
