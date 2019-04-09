@@ -1,0 +1,32 @@
+version: '3.7'
+
+networks:
+  postgre:
+    driver_opts:
+      com.docker.network.bridge.name: br_mxjdriver
+
+services:
+  gallery:
+    restart: always
+    image: genamoscow/gallery
+    container_name: "gallery"
+    init: true
+    networks:
+      - postgre
+    depends_on:
+      - postgresql
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgre/postgres
+    ports:
+      - 8080:8081
+
+  postgresql:
+    restart: always
+    image: postgres:11.2
+    container_name: "postgresql"
+    environment:
+      POSTGRES_PASSWORD: 1
+    networks:
+      - postgre
+    ports:
+      - 5432:5432
